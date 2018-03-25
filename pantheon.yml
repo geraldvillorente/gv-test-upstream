@@ -20,6 +20,9 @@ workflows:
       - type: webphp
         description: Log to New Relic
         script: private/scripts/newrelic/new_relic_deploy.php
+      - type: webphp
+        description: Import configuration from .yml files
+        script: private/scripts/drush/drush_config_import.php
   sync_code:
     after:
       - type: webphp
@@ -33,3 +36,12 @@ workflows:
       - type: webphp
         description: Someone is clearing the cache again
         script: private/scripts/slack/slack_notification.php
+  clone_database:
+    after:
+      - type: webphp
+        description: Disable some modules after cloning the database to test or prod.
+        script: private/scripts/drush/disable_modules_test_prod.php
+      - type: webphp
+        description: Enable modules after cloning the database Dev or Multidev.
+        script: private/scripts/drush/enable_dev_modules.php
+
