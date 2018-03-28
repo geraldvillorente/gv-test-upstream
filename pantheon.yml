@@ -23,6 +23,9 @@ workflows:
       - type: webphp
         description: Import configuration from .yml files
         script: private/scripts/drush/drush_config_import.php
+      - type: webphp
+        description: Copy simplesaml config file to vendor directory
+        script: private/scripts/post_deploy/copy_simplesaml_config.php
   sync_code:
     after:
       - type: webphp
